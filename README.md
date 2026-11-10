@@ -130,6 +130,14 @@ Any Agent with bash tool access can read `.agents/skills/<skill-name>/SKILL.md` 
 
 ---
 
+## 🙏 Acknowledgements
+
+`clone-any-video` is inspired by and adapted from the pioneering concepts of the **Hypit** project. 
+
+We express our sincere gratitude to the Hypit authors for establishing the foundational paradigms of declarative video authoring, semantic script markup (SVML), multi-modal directing playbooks, and decoupled production task graphs. This project rebuilds and extends these ideas into a standalone, deterministic, high-performance media pipeline in pure Rust with full autonomous Agent Skill support.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License OR Apache-2.0.
