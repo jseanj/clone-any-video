@@ -1,0 +1,27 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+
+# OS / Editor artifacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Temporary media & evidence
+/temp/
+/dist/
+/output/
+*.tmp
+
+# Local credentials
+.env
+.env.local
+
+# Local production attempts and cache
+**/.production/

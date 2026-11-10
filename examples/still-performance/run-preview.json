@@ -1,0 +1,9 @@
+{
+  "format": "clone-any-video.run@1",
+  "author": "author.json",
+  "targets": [
+    "speaker.video",
+    "transcribe.document",
+    "blueprint.value"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "format": "clone-any-video.transcript@1",
+  "source": "EXPLICIT TEACHING FIXTURE: invented timing, not measured ASR",
+  "language": "en",
+  "audio_seconds": 1,
+  "passages": [
+    {
+      "text": "Hello world.",
+      "start_seconds": 0,
+      "end_seconds": 0.2,
+      "words": [
+        {
+          "text": "Hello",
+          "start_seconds": 0.02,
+          "end_seconds": 0.09
+        },
+        {
+          "text": "world.",
+          "start_seconds": 0.11,
+          "end_seconds": 0.2
+        }
+      ]
+    }
+  ]
+}

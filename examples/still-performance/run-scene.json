@@ -1,0 +1,8 @@
+{
+  "format": "clone-any-video.run@1",
+  "author": "author.json",
+  "targets": [
+    "scene.image",
+    "blueprint.value"
+  ]
+}

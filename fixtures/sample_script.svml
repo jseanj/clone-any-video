@@ -1,0 +1,15 @@
+<script id="clone_promo">
+  <hook>
+    <HOST> @{claim!} I rebuilt <CloneAnyVideo | clone any video> with pure <Rust | rust> overnight!
+    <GUEST> Really? Even the <API | A P I>{emphasis} || and <SVG | S V G> rendering?
+  </hook>
+
+  <demo>
+    <HOST> Exactly! Every single frame is tied to an explicit <timeline | time line>.
+    <HOST> @{verdict!} No hallucinated timestamps, || zero frame drift!
+  </demo>
+
+  <cta>
+    <HOST> Check out the code on GitHub, and start building your own AI video agent today!
+  </cta>
+</script>

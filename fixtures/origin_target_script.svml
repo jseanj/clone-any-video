@@ -1,0 +1,21 @@
+<script id="clone_any_video_origin_promo">
+  <hook>
+    <!-- 复刻原片 0.0s~3.4s 的“五变一”提问与聚合 -->
+    <HOST> @{question!} Want the power of <five | 5> video tools in one?
+  </hook>
+
+  <identity>
+    <!-- 复刻原片 3.4s~6.0s 的产品命名与微距呈现 -->
+    <HOST> <clone-any-video | clone any video>! Pure <Rust | rust> engine.
+  </identity>
+
+  <proof>
+    <!-- 复刻原片 6.0s~10.8s 的左右对比与竞品战胜主张 -->
+    <HOST> @{compare!} For visible speed || that <beats | B E A T S>{emphasis} traditional pipelines!
+  </proof>
+
+  <outro>
+    <!-- 复刻原片 10.8s~15.4s 的高光展示与品牌长停留 -->
+    <HOST> A super workflow for your best AI videos yet. <GitHub | git hub>!
+  </outro>
+</script>

@@ -1,0 +1,375 @@
+{
+  "format": "clone-any-video.author@1",
+  "tasks": [
+    {
+      "id": "blueprint",
+      "action": {
+        "producer": "json",
+        "value": {
+          "project": {
+            "$input": "project"
+          },
+          "timeline": {
+            "$input": "timeline"
+          },
+          "script": {
+            "$input": "script"
+          }
+        }
+      },
+      "inputs": {
+        "project": {
+          "kind": "file",
+          "path": "project.json",
+          "type": "project"
+        },
+        "timeline": {
+          "kind": "file",
+          "path": "target_timeline.json",
+          "type": "json"
+        },
+        "script": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "full"
+        }
+      }
+    },
+    {
+      "id": "frame",
+      "action": {
+        "producer": "extract-frame",
+        "at_seconds": 0.5
+      },
+      "inputs": {
+        "video": {
+          "kind": "file",
+          "path": "source.mp4",
+          "type": "video"
+        }
+      }
+    },
+    {
+      "id": "scene",
+      "action": {
+        "producer": "image",
+        "flow_project_id": "11111111-2222-3333-4444-555555555555",
+        "spec": {
+          "capture": "Edit the supplied video screenshot, retaining its photographic texture.",
+          "person": "Keep the presenter identity, face, clothes and scene from reference 1. Replace the held product with the exact product from reference 2.",
+          "shot": "Preserve the medium portrait framing, gaze, hand contact and scale. Remove old burned-in captions.",
+          "setting": "Preserve the screenshot background, lighting and color palette.",
+          "aspect_ratio": "9:16",
+          "resolution": "1K",
+          "negative_prompt": null
+        }
+      },
+      "inputs": {
+        "reference:01-source": {
+          "kind": "output",
+          "output": "frame.image"
+        },
+        "reference:02-product": {
+          "kind": "file",
+          "path": "product.png",
+          "type": "image"
+        }
+      }
+    },
+    {
+      "id": "speaker",
+      "action": {
+        "producer": "video",
+        "flow_project_id": "11111111-2222-3333-4444-555555555555",
+        "spec": {
+          "shot_id": "presentation",
+          "first_frame_path": null,
+          "motion_prompt": "One continuous direct-to-camera product presentation. Keep the reference setup and product visible. 0-4s: show the bottle naturally. 4-8s: make a small free-hand gesture while explaining. 8-13s: finish speaking with the product visible. No cuts or zooms.",
+          "camera_motion": "StaticTripod",
+          "relationship": "ImageToVideo",
+          "duration_seconds": 13,
+          "fps": 24,
+          "width": 360,
+          "height": 640
+        }
+      },
+      "inputs": {
+        "first_frame": {
+          "kind": "output",
+          "output": "scene.image"
+        },
+        "dialogue": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "speech",
+          "segment": "presentation"
+        }
+      }
+    },
+    {
+      "id": "performance",
+      "action": {
+        "producer": "adopt-performance",
+        "fps": 24
+      },
+      "inputs": {
+        "video": {
+          "kind": "output",
+          "output": "speaker.video"
+        }
+      }
+    },
+    {
+      "id": "transcribe",
+      "action": {
+        "producer": "transcribe",
+        "language": "en",
+        "expected_model": "medium"
+      },
+      "inputs": {
+        "audio": {
+          "kind": "output",
+          "output": "performance.audio"
+        }
+      }
+    },
+    {
+      "id": "align",
+      "action": {
+        "producer": "align-speech",
+        "fps": 24
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "timing",
+          "segment": "presentation"
+        },
+        "audio": {
+          "kind": "output",
+          "output": "performance.audio"
+        },
+        "transcript": {
+          "kind": "output",
+          "output": "transcribe.document"
+        }
+      }
+    },
+    {
+      "id": "clock",
+      "action": {
+        "producer": "project-timing",
+        "fps": 24,
+        "gap": 0
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "timing",
+          "segment": "presentation"
+        },
+        "layout": {
+          "kind": "file",
+          "path": "project.json",
+          "type": "project"
+        },
+        "alignment:presentation": {
+          "kind": "output",
+          "output": "align.alignment"
+        }
+      }
+    },
+    {
+      "id": "mix",
+      "action": {
+        "producer": "mix"
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "speech",
+          "segment": "presentation"
+        },
+        "project": {
+          "kind": "output",
+          "output": "clock.project"
+        },
+        "voice:presentation": {
+          "kind": "output",
+          "output": "performance.audio"
+        }
+      }
+    },
+    {
+      "id": "schedule",
+      "action": {
+        "producer": "caption-schedule",
+        "recipe": {
+          "id": "ordinary-caption-v1",
+          "placement": {
+            "x": 0.5,
+            "y": 0.87,
+            "width": 0.94,
+            "height": 0.2,
+            "anchor_x": "center",
+            "anchor_y": "bottom"
+          },
+          "typography": {
+            "font_family": "Arial, sans-serif",
+            "font_size_px": 24.0,
+            "font_weight": 800,
+            "line_height": 1.16,
+            "fill_color": "#FFFFFF",
+            "stroke_color": "#000000",
+            "stroke_width_px": 2.0,
+            "shadow_color": "rgba(0,0,0,0.9)",
+            "shadow_blur_px": 4.0
+          },
+          "layout": {
+            "wrap": "word",
+            "max_lines": 2,
+            "max_words_per_line": 6,
+            "align": "center"
+          },
+          "karaoke": {
+            "mode": "none",
+            "transition": "step",
+            "active_fill": "#FFFFFF",
+            "active_box": false,
+            "active_box_color": "transparent",
+            "active_underline": false,
+            "active_scale": 1.0
+          },
+          "envelope": {
+            "lead_seconds": 0.04,
+            "tail_seconds": 0.12,
+            "handoff": "cut"
+          }
+        }
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "target_script.svml",
+          "view": "full",
+          "segment": "presentation"
+        },
+        "clock": {
+          "kind": "output",
+          "output": "clock.clock"
+        }
+      }
+    },
+    {
+      "id": "captions",
+      "action": {
+        "producer": "render-captions",
+        "recipe": {
+          "id": "ordinary-caption-v1",
+          "placement": {
+            "x": 0.5,
+            "y": 0.87,
+            "width": 0.94,
+            "height": 0.2,
+            "anchor_x": "center",
+            "anchor_y": "bottom"
+          },
+          "typography": {
+            "font_family": "Arial, sans-serif",
+            "font_size_px": 24.0,
+            "font_weight": 800,
+            "line_height": 1.16,
+            "fill_color": "#FFFFFF",
+            "stroke_color": "#000000",
+            "stroke_width_px": 2.0,
+            "shadow_color": "rgba(0,0,0,0.9)",
+            "shadow_blur_px": 4.0
+          },
+          "layout": {
+            "wrap": "word",
+            "max_lines": 2,
+            "max_words_per_line": 6,
+            "align": "center"
+          },
+          "karaoke": {
+            "mode": "none",
+            "transition": "step",
+            "active_fill": "#FFFFFF",
+            "active_box": false,
+            "active_box_color": "transparent",
+            "active_underline": false,
+            "active_scale": 1.0
+          },
+          "envelope": {
+            "lead_seconds": 0.04,
+            "tail_seconds": 0.12,
+            "handoff": "cut"
+          }
+        }
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "clock.project"
+        },
+        "schedule": {
+          "kind": "output",
+          "output": "schedule.document"
+        }
+      }
+    },
+    {
+      "id": "compose",
+      "action": {
+        "producer": "compose"
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "captions.project"
+        },
+        "audio": {
+          "kind": "output",
+          "output": "mix.audio"
+        },
+        "background:shot_01": {
+          "kind": "output",
+          "output": "performance.video"
+        },
+        "overlay:caption_overlay": {
+          "kind": "output",
+          "output": "captions.video"
+        }
+      }
+    },
+    {
+      "id": "review",
+      "action": {
+        "producer": "review"
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "compose.project"
+        },
+        "video": {
+          "kind": "output",
+          "output": "compose.video"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "final.video": {
+      "task": "compose",
+      "port": "video"
+    },
+    "final.review": {
+      "task": "review",
+      "port": "report"
+    }
+  }
+}

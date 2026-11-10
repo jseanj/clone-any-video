@@ -1,0 +1,25 @@
+{
+  "format": "clone-any-video.transcript@1",
+  "source": "EXPLICIT TEACHING FIXTURE: invented word times, not measured speech",
+  "language": "en",
+  "audio_seconds": 1,
+  "passages": [
+    {
+      "text": "Meet Aurora.",
+      "start_seconds": 0,
+      "end_seconds": 0.4,
+      "words": [
+        {
+          "text": "Meet",
+          "start_seconds": 0.02,
+          "end_seconds": 0.08
+        },
+        {
+          "text": "Aurora.",
+          "start_seconds": 0.11,
+          "end_seconds": 0.17
+        }
+      ]
+    }
+  ]
+}

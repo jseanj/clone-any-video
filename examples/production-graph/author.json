@@ -1,0 +1,218 @@
+{
+  "format": "clone-any-video.author@1",
+  "tasks": [
+    {
+      "id": "voice",
+      "action": {
+        "producer": "voice",
+        "voice": "Mia",
+        "language": "en"
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "script.svml",
+          "view": "speech",
+          "segment": "hook"
+        }
+      }
+    },
+    {
+      "id": "local-align",
+      "action": {
+        "producer": "align-speech",
+        "fps": 30
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "script.svml",
+          "view": "timing",
+          "segment": "hook"
+        },
+        "audio": {
+          "kind": "output",
+          "output": "voice.audio"
+        },
+        "transcript": {
+          "kind": "file",
+          "path": "transcript.mock.json",
+          "type": "json"
+        }
+      }
+    },
+    {
+      "id": "align",
+      "action": {
+        "producer": "project-timing",
+        "fps": 30,
+        "gap": 0
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "script.svml",
+          "view": "timing"
+        },
+        "layout": {
+          "kind": "file",
+          "path": "layout.json",
+          "type": "project"
+        },
+        "alignment:hook": {
+          "kind": "output",
+          "output": "local-align.alignment"
+        }
+      }
+    },
+    {
+      "id": "mix",
+      "action": {
+        "producer": "mix"
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "script.svml",
+          "view": "speech"
+        },
+        "project": {
+          "kind": "output",
+          "output": "align.project"
+        },
+        "voice:hook": {
+          "kind": "output",
+          "output": "voice.audio"
+        }
+      }
+    },
+    {
+      "id": "image",
+      "action": {
+        "producer": "image",
+        "flow_project_id": "00000000-0000-4000-8000-000000000001",
+        "seed": 42,
+        "spec": {
+          "person": "A small amber bottle matching the declared product reference",
+          "shot": "Medium product shot, locked composition",
+          "setting": "Soft daylight on a quiet desk",
+          "aspect_ratio": "16:9",
+          "resolution": "preview"
+        }
+      },
+      "inputs": {
+        "reference:product": {
+          "kind": "file",
+          "path": "product.png",
+          "type": "image"
+        }
+      }
+    },
+    {
+      "id": "video",
+      "action": {
+        "producer": "video",
+        "flow_project_id": "00000000-0000-4000-8000-000000000001",
+        "spec": {
+          "shot_id": "shot_01",
+          "first_frame_path": null,
+          "motion_prompt": "Subtle natural motion with fixed product framing",
+          "camera_motion": "StaticTripod",
+          "relationship": "ImageToVideo",
+          "duration_seconds": 4,
+          "fps": 30,
+          "width": 640,
+          "height": 360
+        }
+      },
+      "inputs": {
+        "first_frame": {
+          "kind": "output",
+          "output": "image.image"
+        }
+      }
+    },
+    {
+      "id": "schedule",
+      "action": {
+        "producer": "caption-schedule"
+      },
+      "inputs": {
+        "script": {
+          "kind": "script",
+          "path": "script.svml"
+        },
+        "clock": {
+          "kind": "output",
+          "output": "align.clock"
+        }
+      }
+    },
+    {
+      "id": "captions",
+      "action": {
+        "producer": "render-captions"
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "align.project"
+        },
+        "schedule": {
+          "kind": "output",
+          "output": "schedule.document"
+        }
+      }
+    },
+    {
+      "id": "compose",
+      "action": {
+        "producer": "compose"
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "captions.project"
+        },
+        "audio": {
+          "kind": "output",
+          "output": "mix.audio"
+        },
+        "background:shot_01": {
+          "kind": "output",
+          "output": "video.video"
+        },
+        "overlay:caption_overlay": {
+          "kind": "output",
+          "output": "captions.video"
+        }
+      }
+    },
+    {
+      "id": "review",
+      "action": {
+        "producer": "review"
+      },
+      "inputs": {
+        "project": {
+          "kind": "output",
+          "output": "compose.project"
+        },
+        "video": {
+          "kind": "output",
+          "output": "compose.video"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "final.video": {
+      "task": "compose",
+      "port": "video"
+    },
+    "final.review": {
+      "task": "review",
+      "port": "report"
+    }
+  }
+}

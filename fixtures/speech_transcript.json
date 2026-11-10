@@ -1,0 +1,81 @@
+{
+  "format": "clone-any-video.transcript@1",
+  "source": "fixtures/speech_sample.mp4",
+  "language": "en",
+  "audio_seconds": 3.994,
+  "passages": [
+    {
+      "text": "Hello world! Welcome to a Clung Any video. And, help it!",
+      "start_seconds": 0.0,
+      "end_seconds": 3.96,
+      "words": [
+        {
+          "text": "Hello",
+          "start_seconds": 0.0,
+          "end_seconds": 0.36,
+          "score": 0.828
+        },
+        {
+          "text": "world!",
+          "start_seconds": 0.36,
+          "end_seconds": 0.86,
+          "score": 0.635
+        },
+        {
+          "text": "Welcome",
+          "start_seconds": 1.38,
+          "end_seconds": 1.68,
+          "score": 0.987
+        },
+        {
+          "text": "to",
+          "start_seconds": 1.68,
+          "end_seconds": 1.94,
+          "score": 0.995
+        },
+        {
+          "text": "a",
+          "start_seconds": 1.94,
+          "end_seconds": 2.02,
+          "score": 0.59
+        },
+        {
+          "text": "Clung",
+          "start_seconds": 2.02,
+          "end_seconds": 2.28,
+          "score": 0.34
+        },
+        {
+          "text": "Any",
+          "start_seconds": 2.28,
+          "end_seconds": 2.54,
+          "score": 0.314
+        },
+        {
+          "text": "video.",
+          "start_seconds": 2.54,
+          "end_seconds": 2.98,
+          "score": 0.697
+        },
+        {
+          "text": "And,",
+          "start_seconds": 3.42,
+          "end_seconds": 3.68,
+          "score": 0.88
+        },
+        {
+          "text": "help",
+          "start_seconds": 3.68,
+          "end_seconds": 3.86,
+          "score": 0.756
+        },
+        {
+          "text": "it!",
+          "start_seconds": 3.86,
+          "end_seconds": 3.96,
+          "score": 0.645
+        }
+      ]
+    }
+  ]
+}

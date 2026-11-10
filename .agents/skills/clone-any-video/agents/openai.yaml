@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clone Any Video"
+  short_description: "Direct and deliver videos from references or briefs"
+  default_prompt: "Use $clone-any-video to make or revise the video from my brief and any supplied references."

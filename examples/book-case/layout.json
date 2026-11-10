@@ -1,0 +1,128 @@
+{
+  "format": "clone-any-video.project@1",
+  "meta": {
+    "id": "aurora_book_case",
+    "title": "Aurora teaching ad",
+    "width": 640,
+    "height": 360,
+    "fps": 30,
+    "total_seconds": 16,
+    "total_frames": 480
+  },
+  "shots": [
+    {
+      "id": "shot_01",
+      "segment_id": "hook",
+      "shot_index": 1,
+      "start_seconds": 0,
+      "end_seconds": 4,
+      "start_frame": 0,
+      "end_frame": 120,
+      "duration_seconds": 4,
+      "visual_type": "GeneratedVideo",
+      "description": "Teaching product shot: hook",
+      "prompt_hint": ""
+    },
+    {
+      "id": "shot_02",
+      "segment_id": "identity",
+      "shot_index": 2,
+      "start_seconds": 4,
+      "end_seconds": 8,
+      "start_frame": 120,
+      "end_frame": 240,
+      "duration_seconds": 4,
+      "visual_type": "GeneratedVideo",
+      "description": "Teaching product shot: identity",
+      "prompt_hint": ""
+    },
+    {
+      "id": "shot_03",
+      "segment_id": "proof",
+      "shot_index": 3,
+      "start_seconds": 8,
+      "end_seconds": 12,
+      "start_frame": 240,
+      "end_frame": 360,
+      "duration_seconds": 4,
+      "visual_type": "GeneratedVideo",
+      "description": "Teaching product shot: proof",
+      "prompt_hint": ""
+    },
+    {
+      "id": "shot_04",
+      "segment_id": "outro",
+      "shot_index": 4,
+      "start_seconds": 12,
+      "end_seconds": 16,
+      "start_frame": 360,
+      "end_frame": 480,
+      "duration_seconds": 4,
+      "visual_type": "GeneratedVideo",
+      "description": "Teaching product shot: outro",
+      "prompt_hint": ""
+    }
+  ],
+  "tracks": {
+    "visual_bg": [],
+    "visual_components": [],
+    "captions": [],
+    "voice": [
+      {
+        "id": "voice_hook",
+        "name": "hook",
+        "start_seconds": 0,
+        "end_seconds": 4,
+        "start_frame": 0,
+        "end_frame": 120,
+        "payload": {
+          "spoken_text": "A simpler routine.",
+          "turns_count": 1,
+          "timing_status": "estimated"
+        }
+      },
+      {
+        "id": "voice_identity",
+        "name": "identity",
+        "start_seconds": 4,
+        "end_seconds": 8,
+        "start_frame": 120,
+        "end_frame": 240,
+        "payload": {
+          "spoken_text": "Aurora serum.",
+          "turns_count": 1,
+          "timing_status": "estimated"
+        }
+      },
+      {
+        "id": "voice_proof",
+        "name": "proof",
+        "start_seconds": 8,
+        "end_seconds": 12,
+        "start_frame": 240,
+        "end_frame": 360,
+        "payload": {
+          "spoken_text": "One bottle.",
+          "turns_count": 1,
+          "timing_status": "estimated"
+        }
+      },
+      {
+        "id": "voice_outro",
+        "name": "outro",
+        "start_seconds": 12,
+        "end_seconds": 16,
+        "start_frame": 360,
+        "end_frame": 480,
+        "payload": {
+          "spoken_text": "Meet Aurora.",
+          "turns_count": 1,
+          "timing_status": "estimated"
+        }
+      }
+    ],
+    "bgm": [],
+    "sfx": []
+  },
+  "asset_tasks": []
+}

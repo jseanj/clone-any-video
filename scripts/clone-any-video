@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Ensure latest unified binary of clone-any-video
+BIN="$ROOT_DIR/target/debug/clone-any-video"
+cargo build -q --manifest-path "$ROOT_DIR/Cargo.toml"
+
+# Project-local credentials are excluded from version control.
+if [ -f "$ROOT_DIR/.env.local" ]; then
+    set -a
+    source "$ROOT_DIR/.env.local"
+    set +a
+fi
+
+exec "$BIN" "$@"

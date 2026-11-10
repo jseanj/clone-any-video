@@ -1,0 +1,5 @@
+<svrun version="1">
+  <author source="author.json"/>
+  <target output="final.video"/>
+  <target output="final.review"/>
+</svrun>

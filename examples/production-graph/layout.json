@@ -1,0 +1,50 @@
+{
+  "format": "clone-any-video.project@1",
+  "meta": {
+    "id": "graph_demo",
+    "title": "Explicit production graph demo",
+    "width": 640,
+    "height": 360,
+    "fps": 30,
+    "total_seconds": 1,
+    "total_frames": 30
+  },
+  "shots": [
+    {
+      "id": "shot_01",
+      "segment_id": "hook",
+      "shot_index": 1,
+      "start_seconds": 0,
+      "end_seconds": 1,
+      "start_frame": 0,
+      "end_frame": 30,
+      "duration_seconds": 1,
+      "visual_type": "GeneratedVideo",
+      "description": "Demonstration shot",
+      "prompt_hint": ""
+    }
+  ],
+  "tracks": {
+    "visual_bg": [],
+    "visual_components": [],
+    "captions": [],
+    "voice": [
+      {
+        "id": "voice_hook",
+        "name": "Speech: hook",
+        "start_seconds": 0,
+        "end_seconds": 1,
+        "start_frame": 0,
+        "end_frame": 30,
+        "payload": {
+          "spoken_text": "Hello world.",
+          "turns_count": 1,
+          "timing_status": "estimated"
+        }
+      }
+    ],
+    "bgm": [],
+    "sfx": []
+  },
+  "asset_tasks": []
+}

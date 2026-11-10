@@ -1,0 +1,29 @@
+[package]
+name = "clone-any-video"
+version = "0.1.0"
+edition = "2021"
+authors = ["Clone Any Video Authors"]
+license = "MIT OR Apache-2.0"
+description = "Multi-Modal Automated Video Production Agent and Deterministic Media Pipeline"
+
+[[bin]]
+name = "clone-any-video"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1.38", features = ["full"] }
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+reqwest = { version = "0.12", features = ["json", "stream", "multipart"] }
+image = "0.25"
+tera = "1.20"
+tempfile = "3"
+base64 = "0.22"
+roxmltree = "0.21"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
