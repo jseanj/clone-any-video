@@ -57,6 +57,18 @@ fn units(script: &ScriptDocument) -> Vec<String> {
         .map(|u| u.spoken.clone())
         .collect()
 }
+fn measured_audio_frames(seconds: f64, fps: f64) -> u64 {
+    let frames = seconds * fps;
+    let nearest = frames.round();
+    // ffprobe rounds duration strings to microseconds. Do not turn that
+    // rounding into an extra frame; a real extra PCM sample still rounds up.
+    let tolerance = fps * 0.5e-6 + f64::EPSILON * frames.abs() * 4.0;
+    if (frames - nearest).abs() <= tolerance {
+        nearest as u64
+    } else {
+        frames.ceil() as u64
+    }
+}
 pub async fn align(
     script: &ScriptDocument,
     media: &Path,
@@ -102,7 +114,7 @@ pub async fn align(
     let frames = performance
         .as_ref()
         .map(|p| p.frames)
-        .unwrap_or_else(|| (info.duration_seconds * fps).ceil() as u64);
+        .unwrap_or_else(|| measured_audio_frames(info.duration_seconds, fps));
     Ok(LocalAlignment {
         format: "clone-any-video.speech-alignment@1".into(),
         script_identity: identity(script)?,
@@ -158,7 +170,7 @@ pub fn project(
                 != a.performance
                     .as_ref()
                     .map(|p| p.frames)
-                    .unwrap_or_else(|| (a.duration_seconds * fps).ceil() as u64)
+                    .unwrap_or_else(|| measured_audio_frames(a.duration_seconds, fps))
         {
             bail!("Alignment identity/domain mismatch for {}", segment.id);
         }
@@ -601,6 +613,30 @@ mod tests {
 #[cfg(test)]
 mod frame_regressions {
     use super::*;
+    #[test]
+    fn probe_rounding_preserves_exact_audio_frame_domains() {
+        for fps in [24.0, 30.0, 60.0, 30000.0 / 1001.0] {
+            for frames in [1, 197, 703] {
+                let reported: f64 = format!("{:.6}", frames as f64 / fps).parse().unwrap();
+                assert_eq!(measured_audio_frames(reported, fps), frames);
+            }
+        }
+        assert_eq!(
+            measured_audio_frames(6.566667, 30.0)
+                + measured_audio_frames(23.433333, 30.0),
+            900
+        );
+    }
+    #[test]
+    fn a_real_extra_audio_sample_still_needs_another_frame() {
+        for fps in [24.0, 30.0, 60.0] {
+            let reported: f64 = format!("{:.6}", 197.0 / fps + 1.0 / 48000.0)
+                .parse()
+                .unwrap();
+            assert_eq!(measured_audio_frames(reported, fps), 198);
+        }
+        assert_eq!(measured_audio_frames(1.01, 30.0), 31);
+    }
     #[test]
     fn integer_domains_and_a_new_gap_preserve_both_sides_of_an_old_cut() {
         let script = crate::script::parse_script(
